@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # EmployeeManagement
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
@@ -57,3 +58,6 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+=======
+# Tasks-Management-System
+>>>>>>> 69e8842fe1d5a3ce1793462f768f03518c6f700c
