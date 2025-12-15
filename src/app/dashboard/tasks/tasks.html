@@ -1,0 +1,169 @@
+<div class="tasks-container" >
+  <h2>Tasks</h2>
+
+  <div class="tasks-feedback error" *ngIf="error">
+    {{ error }}
+  </div>
+  <div class="tasks-feedback info" *ngIf="loading">
+    Loading tasks...
+  </div>
+
+
+  <div class="filters">
+    <ng-select
+      [items]="statuses"
+      bindLabel="label"
+      bindValue="value"
+      [(ngModel)]="selectedStatus"
+      (change)="loadTasks()"
+      placeholder="Filter by status">
+    </ng-select>
+
+
+
+
+    <ng-select
+      *ngIf="canUseAssigneeFilter()"
+      [items]="assignees"
+      [(ngModel)]="selectedAssignees"
+      [multiple]="true"
+      (change)="loadTasks()"
+      placeholder="Filter by assignee"
+      [searchable]="true"
+      [clearable]="true"
+      class="custom-ng-select">
+    </ng-select>
+
+
+  </div>
+
+
+  <div class="tasks-table-wrapper" style="max-height: 400px; overflow-y: auto;">
+    <table class="mat-elevation-z8 tasks-table" style="width: 100%;">
+      <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Assigned To</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th *ngIf="canSeeAnyTaskActions()">Actions</th>
+        <th>View Task</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.id }}</td>
+        <td>{{ task.title }}</td>
+        <td>{{ task.assignedTo }}</td>
+        <td><span class="status-badge" [ngClass]="task.status">{{ task.status }}</span></td>
+        <td>{{ task.createdAt | date:'short' }}</td>
+        <td *ngIf="canSeeAnyTaskActions()">
+          <div style="display: flex; gap: 8px; flex-direction: row; align-items: flex-start;">
+            <button mat-icon-button color="primary" (click)="goToEdit(task.id)" *ngIf="!isEmployee() && canEditTask(task)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+
+            <mat-select
+              *ngIf="isEmployee() && canEditTask(task) && isTaskOwner(task)"
+              [(ngModel)]="task.status"
+              (selectionChange)="updateTaskStatus(task)"
+              class="status-select"
+              style="color: #006400; font-size: 16px; border-radius: 4px; padding: 1px 1px; min-height: 28px;">
+              <mat-option *ngFor="let s of statuses"
+                          [value]="s.value"
+                          [disabled]="!getAllowedStatuses(task).includes(s.value)">
+
+                {{ s.label }}
+              </mat-option>
+            </mat-select>
+
+            <button mat-icon-button color="warn" (click)="deleteTask(task)" [disabled]="deletingTaskId === task.id" *ngIf="canDeleteTask(task)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+
+        <td>
+          <button mat-icon-button color="primary" (click)="openTask(task.id)" matTooltip="View Task">
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+        </td>
+
+
+      </tr>
+
+
+      </tbody>
+    </table>
+
+
+  </div>
+
+  <div class="pagination-container" style="display: flex; align-items: center; justify-content: space-between; margin-top: 50px;">
+    <!-- Items per page selector -->
+    <mat-form-field appearance="outline" style="width: 100px;">
+      <mat-label>Items per page</mat-label>
+      <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="loadTasks()">
+        <mat-option [value]="5">5</mat-option>
+        <mat-option [value]="10">10</mat-option>
+        <mat-option [value]="20">20</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Pagination controls -->
+    <div class="pagination-wrapper">
+      <div class="pagination-wrapper" style="display: flex; gap: 8px; margin-top: 16px;">
+        <button
+          mat-button
+          [disabled]="page === 1"
+          (click)="changePage(page - 1)">
+          ❮❮
+        </button>
+
+        <button
+          mat-button
+          *ngFor="let p of pages"
+          [color]="p === page ? 'primary' : ''"
+          (click)="changePage(p)">
+          {{ p }}
+        </button>
+
+        <button
+          mat-button
+          [disabled]="page === totalPages"
+          (click)="changePage(page + 1)">
+          ❯❯
+        </button>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- Add Task Button -->
+
+  <div class="add-task-btn-wrapper" *ngIf="canCreateTask()">
+    <button mat-raised-button color="primary" (click)="openAddTaskDialog()">
+      Add New Task
+    </button>
+  </div>
+</div>
+
+
+
+<ng-template #noTaskAccess>
+
+  <div class="tasks-container">
+    <h2>Tasks</h2>
+    <div class="tasks-feedback error">
+      You do not have permission to view tasks. Please contact your administrator.
+    </div>
+  </div>
+</ng-template>
+

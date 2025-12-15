@@ -1,0 +1,57 @@
+<div class="task-wrapper">
+  <div class="task-container" [formGroup]="taskForm">
+    <h2>New Task</h2>
+
+    <div class="card">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Assign To</mat-label>
+        <mat-select formControlName="assignedUserId">
+          <mat-option *ngFor="let user of assignees" [value]="user.id">{{ user.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="card">
+      <h3>Attachments</h3>
+      <div class="upload-row">
+        <input type="file" multiple (change)="onFilesSelected($event)">
+        <span *ngIf="selectedFiles.length">{{ selectedFiles.length }} files selected</span>
+      </div>
+
+      <div *ngIf="selectedFiles.length > 0" class="file-list">
+        <div *ngFor="let file of selectedFiles" class="file-row">
+          <mat-icon>insert_drive_file</mat-icon>
+          {{ file.name }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>First Comment</mat-label>
+        <textarea matInput [(ngModel)]="firstComment" name="firstComment" [ngModelOptions]="{standalone: true}"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <button mat-raised-button class="green-btn" (click)="createTask()">
+    <mat-icon>add</mat-icon> Create Task
+  </button>
+</div>

@@ -1,0 +1,74 @@
+<div class="page">
+
+  <h2> Employees Without Active Tasks</h2>
+
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+  <div class="table-wrapper" *ngIf="!loading">
+    <table mat-table [dataSource]="employees" class="mat-elevation-z8 tasks-table">
+
+      <!-- Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>ID / Name</th>
+        <td mat-cell *matCellDef="let e">{{ e.id }} - {{ e.name }}</td>
+      </ng-container>
+
+      <!-- Email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let e">{{ e.email }}</td>
+      </ng-container>
+
+      <!-- Total Tasks -->
+      <ng-container matColumnDef="totalTasks">
+        <th mat-header-cell *matHeaderCellDef>Tasks</th>
+        <td mat-cell *matCellDef="let e">
+          <a
+            *ngIf="e.totalTasks > 0; else noTasks"
+            (click)="goToTasks(e.id)"
+            class="task-link clickable"
+          >
+            {{ e.totalTasks }}
+          </a>
+
+          <ng-template #noTasks>
+      <span class="task-link disabled">
+        {{ e.totalTasks }}
+      </span>
+          </ng-template>
+        </td>
+      </ng-container>
+
+
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let e">
+          <span class="status-badge" [ngClass]="e.status.toLowerCase()">
+            {{ e.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Action -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Assign Task</th>
+        <td mat-cell *matCellDef="let employee">
+          <button mat-icon-button color="primary" (click)="assignTask(employee)" matTooltip="Assign Task">
+            <mat-icon>add_task</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <p *ngIf="employees.length === 0" class="empty">
+       All employees have active tasks
+    </p>
+  </div>
+
+</div>

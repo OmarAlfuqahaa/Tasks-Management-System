@@ -1,0 +1,132 @@
+@if (canManageUsers()) {
+
+  <div class="users-container">
+    <h2>Users List</h2>
+
+
+    <!-- Filters -->
+    <div class="filters" style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter by role</mat-label>
+        <mat-select [(ngModel)]="selectedRole" (selectionChange)="filterByRole()">
+          @for (role of roles; track role) {
+            <mat-option [value]="role">{{ role }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          type="search"
+          placeholder="Search users"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange($event)" />
+      </mat-form-field>
+    </div>
+
+    @if (loadingUsers) {
+      <div class="state-message">Loading users...</div>
+    }
+
+    @if (apiError) {
+      <div class="state-message error">{{ apiError }}</div>
+    }
+
+    @if (!loadingUsers && !apiError && users.length === 0){
+      <div class="state-message">
+        No users matched your filters.
+      </div>
+    }
+
+    <!-- Users Table -->
+    <div style="max-height: 400px; overflow-y: auto; width: 100%;">
+      <table class="users-table" style="width: 100%; text-align: center;">
+        <thead style="position: sticky; top: 0; background: white; z-index: 5; border-bottom: 1px solid #ddd;">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (user of users; track user.id) {
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button mat-button color="primary" (click)="editUser(user)">Edit</button>
+                <button
+                  mat-button
+                  color="warn"
+                  (click)="deleteUser(user)"
+                  [disabled]="isDeleting(user.id)">
+                  {{ isDeleting(user.id) ? 'Deleting...' : 'Delete' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- Pagination Controls + Items per Page -->
+    <div class="pagination-container" style="display: flex; align-items: center; justify-content: space-between; margin-top: 16px;">
+      <mat-form-field appearance="outline" style="width: 120px;">
+        <mat-label>Items per page</mat-label>
+        <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="onItemsPerPageChange()">
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="10">10</mat-option>
+          <mat-option [value]="20">20</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+      <div class="pagination-wrapper">
+        <div class="pagination-wrapper" style="display: flex; gap: 8px; margin-top: 16px;">
+          <button
+            mat-button
+            [disabled]="page === 1"
+            (click)="changePage(page - 1)">
+            ❮❮
+          </button>
+
+          <button
+            mat-button
+            *ngFor="let p of pages"
+            [color]="p === page ? 'primary' : ''"
+            (click)="changePage(p)">
+            {{ p }}
+          </button>
+
+          <button
+            mat-button
+            [disabled]="page === totalPages"
+            (click)="changePage(page + 1)">
+            ❯❯
+          </button>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+  </div>
+} @else {
+  <div class="users-container">
+    <h2>Users List</h2>
+    <div class="state-message error">
+      You do not have permission to manage users.
+    </div>
+  </div>
+}

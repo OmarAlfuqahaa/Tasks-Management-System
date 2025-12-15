@@ -1,0 +1,60 @@
+<form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+  @if (apiError) {
+    <div class="feedback error">
+      {{ apiError }}
+    </div>
+  }
+  @if (successMessage) {
+    <div class="feedback success">
+      {{ successMessage }}
+    </div>
+  }
+  @if (!canEditLoadedTask && !loading) {
+    <div class="permission-banner">
+      You can view this task but do not have permission to update it.
+    </div>
+  }
+  <h2>Edit Task</h2>
+
+
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Assigned To</mat-label>
+    <mat-select formControlName="assignedUserId" [disabled]="!canUpdateAssignee() || taskForm.disabled">
+      @for (user of assignees; track user.id) {
+        <mat-option [value]="user.id">
+          {{ user.name }} — {{ user.role }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  @if (assigneesLoading) {
+    <div class="inline-state">Loading available users...</div>
+  }
+  @if (assigneesError) {
+    <div class="inline-state error">{{ assigneesError }}</div>
+  }
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      @for (s of statuses; track s.value) {
+        <mat-option [value]="s.value">{{ s.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="loading || !canEditLoadedTask">
+    {{ loading ? 'Saving...' : 'Save' }}
+  </button>
+</form>
+

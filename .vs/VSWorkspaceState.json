@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Application\\EmployeeManagement.Application\\Common\\Interfaces",
+    "\\Application\\EmployeeManagement.Application\\Common\\Models",
+    "\\Application\\EmployeeManagement.Application\\Common\\Options",
+    "\\Application\\EmployeeManagement.Application\\Features\\Auth\\Commands\\Login",
+    "\\Application\\EmployeeManagement.Application\\Features\\Auth\\Commands\\Logout",
+    "\\Application\\EmployeeManagement.Application\\Features\\Auth\\Commands\\RefreshToken",
+    "\\Application\\EmployeeManagement.Application\\Features\\Auth\\Commands\\Register",
+    "\\Application\\EmployeeManagement.Application\\Features\\Auth\\DTOs",
+    "\\EmployeeManagement.Api\\Migrations"
+  ],
+  "SelectedNode": "\\EmployeeManagement.Api",
+  "PreviewInSolutionExplorer": false
+}

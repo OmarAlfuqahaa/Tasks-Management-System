@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-family-base: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --color-bg-app: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-text: #131736;
+  --color-muted: #5a5f80;
+  --color-border: #e2e6f5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  background: var(--color-bg-app);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  border-radius: 30px;
+
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* --- COMMON ANIMATION --- */
+@keyframes snackbarFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  animation: snackbarFadeInUp 0.35s ease-out !important;
+  border-radius: 10px !important;
+}
+
+/* --- SUCCESS (أخضر هادئ) --- */
+.mat-mdc-snack-bar-container.snackbar-success .mdc-snackbar__surface {
+  background-color: #43a047 !important;  /* أخضر موزون */
+  color: #ffffff !important;
+  border-left: 6px solid #2e7d32 !important; /* خط جانبي جميل */
+}
+
+/* --- ERROR (أحمر وردي أنيق) --- */
+.mat-mdc-snack-bar-container.snackbar-error .mdc-snackbar__surface {
+  background-color: #e53935 !important; /* أحمر رايق */
+  color: #ffffff !important;
+  border-left: 6px solid #b71c1c !important;
+}
+
+/* ===== STYLE FOR ACTION BUTTON "Close" ===== */
+.mat-mdc-snack-bar-container .mdc-snackbar__actions .mdc-button {
+  color: #ffffff !important;            /* يخليه أبيض وواضح */
+  font-weight: 600 !important;          /* سمك بسيط */
+  text-transform: uppercase !important; /* يخليه أوضح */
+}
+
+/* إذا بدك لون خاص للنجاح */
+.mat-mdc-snack-bar-container.snackbar-success .mdc-snackbar__actions .mdc-button {
+  color: #e8f5e9 !important;  /* أبيض مخلوط بالأخضر هادي */
+}
+
+/* إذا بدك لون خاص للخطأ */
+.mat-mdc-snack-bar-container.snackbar-error .mdc-snackbar__actions .mdc-button {
+  color: #ffebee !important;  /* أبيض وردي ناعم */
+}
+

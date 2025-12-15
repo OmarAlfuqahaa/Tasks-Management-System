@@ -1,0 +1,52 @@
+CREATE DATABASE IF NOT EXISTS employee_management
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE employee_management;
+
+CREATE TABLE IF NOT EXISTS users (
+  id            BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name          VARCHAR(120)        NOT NULL,
+  email         VARCHAR(160)        NOT NULL UNIQUE,
+  password_hash VARCHAR(255)        NOT NULL,
+  role          ENUM('admin','project-manager','employee') NOT NULL DEFAULT 'employee',
+  created_at    TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at    TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS projects (
+  id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name        VARCHAR(160) NOT NULL,
+  description TEXT,
+  owner_id    BIGINT UNSIGNED,
+  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_projects_owner FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS tasks (
+  id           BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  title        VARCHAR(160) NOT NULL,
+  description  TEXT,
+  assigned_to  BIGINT UNSIGNED,
+  status       ENUM('todo','in-progress','done') NOT NULL DEFAULT 'todo',
+  project_id   BIGINT UNSIGNED NULL,
+  created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_tasks_assignee FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL,
+  CONSTRAINT fk_tasks_project  FOREIGN KEY (project_id)  REFERENCES projects(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+INSERT INTO users (name, email, password_hash, role) VALUES
+('Admin User', 'admin@example.com', '$2y$10$examplehashReplaceMe', 'admin'),
+('Project Manager 1', 'pm1@example.com', '$2y$10$examplehashReplaceMe', 'project-manager'),
+('Employee 1', 'employee1@example.com', '$2y$10$examplehashReplaceMe', 'employee'),
+('Employee 2', 'employee2@example.com', '$2y$10$examplehashReplaceMe', 'employee');
+
+INSERT INTO projects (name, description, owner_id) VALUES
+('Project Alpha', 'First test project', 2),
+('Project Beta', 'Second test project', 2);
+
+INSERT INTO tasks (title, description, assigned_to, status, project_id) VALUES
+('Design Database', 'Create initial database schema', 3, 'todo', 1),
+('Setup Backend', 'Setup .NET backend project', 4, 'in-progress', 1),
+('Frontend Login Page', 'Create login page using Angular', 3, 'todo', 2),
+('Test API Endpoints', 'Test all backend endpoints', 4, 'todo', 2);

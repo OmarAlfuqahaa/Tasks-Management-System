@@ -1,0 +1,32 @@
+<div class="edit-user-dialog-container">
+  <h2>Edit User</h2>
+  <form [formGroup]="editForm">
+    <div class="feedback error" *ngIf="apiError">
+      {{ apiError }}
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="onSave()" [disabled]="loading">
+        {{ loading ? 'Saving...' : 'Save' }}
+      </button>
+      <button mat-raised-button color="warn" (click)="onCancel()" [disabled]="loading">Cancel</button>
+    </div>
+  </form>
+</div>

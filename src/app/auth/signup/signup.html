@@ -1,0 +1,62 @@
+<div class="signup-page">
+  <img src="assets/images.png" alt="Logo" class="top-left-logo" />
+
+  <div class="signup-container">
+    <h2>Create account</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+        <mat-error *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
+          Name is required (min 3 characters)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+          Enter a valid email
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+          Password is required (min 6 characters)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword">
+        <mat-error *ngIf="signupForm.hasError('passwordsMismatch') && signupForm.get('confirmPassword')?.touched">
+          Passwords do not match
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="employee">Employee</mat-option>
+          <mat-option value="project-manager">Project Manager</mat-option>
+        </mat-select>
+        <mat-error *ngIf="signupForm.get('role')?.invalid && signupForm.get('role')?.touched">
+          Role is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="signup-error" *ngIf="apiError">{{ apiError }}</div>
+      <div class="signup-success" *ngIf="successMessage">{{ successMessage }}</div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid || loading">
+        {{ loading ? 'Signing up...' : 'Sign Up' }}
+      </button>
+
+
+    </form>
+  </div>
+</div>

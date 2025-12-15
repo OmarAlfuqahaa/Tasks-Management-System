@@ -1,0 +1,47 @@
+.edit-user-dialog-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 24px 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+h2 {
+  margin: 0;
+  text-align: center;
+  color: #4a00b8;
+  font-size: 1.5rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+button {
+  min-width: 100px;
+}
+
+.feedback {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.feedback.error {
+  background: rgba(255, 77, 77, 0.15);
+  border: 1px solid rgba(255, 77, 77, 0.4);
+  color: #7a0000;
+}

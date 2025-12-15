@@ -1,0 +1,99 @@
+<div *ngIf="task" class="task-container">
+
+  <!-- Header -->
+  <div class="task-header">
+    <h2>{{ task.title }}</h2>
+    <div class="task-meta">
+      <span *ngIf="task.updatedAt">
+        <mat-icon>event</mat-icon> {{ task.updatedAt | date:'short' }}
+      </span>
+    </div>
+  </div>
+
+  <mat-tab-group mat-stretch-tabs class="task-tabs">
+
+    <mat-tab label="Task Details">
+      <div class="card">
+
+        <h3><mat-icon>description</mat-icon> Description</h3>
+        <p>{{ task.description }}</p>
+
+        <h3><mat-icon>sync_alt</mat-icon> Change Status</h3>
+
+        <mat-form-field appearance="outline" class="status-field">
+          <mat-label>Status</mat-label>
+          <mat-select [(value)]="task.status" (selectionChange)="changeStatus($event.value)">
+            <mat-option
+              *ngFor="let s of statuses"
+              [value]="s.value"
+              [disabled]="!getAllowedStatuses().includes(s.value)">
+              {{ s.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Attachments">
+      <div class="card">
+
+        <h3><mat-icon>attach_file</mat-icon> Attachments</h3>
+
+        <div class="upload-row">
+          <input type="file" #fileInput (change)="onFileSelected($event)" />
+          <button class="action-btn" (click)="uploadFile(fileInput)">
+            <mat-icon>cloud_upload</mat-icon> Upload
+          </button>
+        </div>
+
+        <hr>
+
+        <div *ngIf="task.attachments?.length > 0; else noFiles">
+          <div class="file-row" *ngFor="let file of task.attachments">
+            <mat-icon>insert_drive_file</mat-icon>
+
+            <a [href]="'http://localhost:5258' + file.url" target="_blank">
+              {{ file.name }}
+            </a>
+
+            <button class="delete-btn" (click)="deleteAttachment(file.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <ng-template #noFiles>
+          <p>No attachments uploaded.</p>
+        </ng-template>
+
+      </div>
+    </mat-tab>
+
+
+    <mat-tab label="Comments">
+      <div class="card comments-card">
+
+        <h3><mat-icon>chat</mat-icon> Comments</h3>
+
+        <div *ngFor="let comment of task.comments" class="comment-box">
+          <div class="comment-header">
+            <strong>{{ comment.authorName }}</strong>
+            <span>{{ comment.createdAt | date:'short' }}</span>
+          </div>
+          <p>{{ comment.text }}</p>
+        </div>
+
+        <div class="add-comment-box">
+          <input [(ngModel)]="newComment" placeholder="Write a comment..." />
+          <button class="action-btn" (click)="addComment()">
+            <mat-icon>send</mat-icon> Send
+          </button>
+        </div>
+
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>
