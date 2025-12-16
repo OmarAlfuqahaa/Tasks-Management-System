@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened class="sidenav">
+  <mat-sidenav class="sidenav" mode="side" opened>
     <mat-toolbar color="primary">
       <span class="brand">Dashboard</span>
       <span class="spacer"></span>
@@ -7,12 +7,12 @@
 
     <mat-nav-list>
       <a
-        *ngFor="let item of menuItems"
-        mat-list-item
-        [routerLink]="item.route || null"
-        routerLinkActive="active"
         (click)="onNavItemClick(item, $event)"
+        *ngFor="let item of menuItems"
         [class.action-only]="item.action && !item.route"
+        [routerLink]="item.route || null"
+        mat-list-item
+        routerLinkActive="active"
       >
         <mat-icon>{{ item.icon }}</mat-icon>
         {{ item.label }}
@@ -21,15 +21,15 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="main-content">
-    <div class="welcome-box" *ngIf="currentUser">
+    <div *ngIf="currentUser" class="welcome-box">
       Welcome {{ currentUser.name || currentUser.email }} 👋
-      <div class="user-message" *ngIf="currentUser">
+      <div *ngIf="currentUser" class="user-message">
         <ng-container *ngIf="currentUser.role === 'project-manager'; else normalMessage">
           🧑‍💼 Project Manager — 👨‍💻 Employees: {{ stats.employees }} •
           <span
+            (click)="openIdleEmployees()"
             class="clickable"
-            matTooltip="Click to see employees with no active tasks"
-            (click)="openIdleEmployees()">
+            matTooltip="Click to see employees with no active tasks">
       ⭕ {{ stats.employeesWithoutActiveTasks }} have no tasks
     </span>
           • Manage your team

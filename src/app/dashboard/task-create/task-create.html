@@ -1,16 +1,16 @@
 <div class="task-wrapper">
-  <div class="task-container" [formGroup]="taskForm">
+  <div [formGroup]="taskForm" class="task-container">
     <h2>New Task</h2>
 
     <div class="card">
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
-        <input matInput formControlName="title">
+        <input formControlName="title" matInput>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description"></textarea>
+        <textarea formControlName="description" matInput></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -31,7 +31,7 @@
     <div class="card">
       <h3>Attachments</h3>
       <div class="upload-row">
-        <input type="file" multiple (change)="onFilesSelected($event)">
+        <input (change)="onFilesSelected($event)" multiple type="file">
         <span *ngIf="selectedFiles.length">{{ selectedFiles.length }} files selected</span>
       </div>
 
@@ -46,12 +46,14 @@
     <div class="card">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>First Comment</mat-label>
-        <textarea matInput [(ngModel)]="firstComment" name="firstComment" [ngModelOptions]="{standalone: true}"></textarea>
+        <textarea [(ngModel)]="firstComment" [ngModelOptions]="{standalone: true}" matInput
+                  name="firstComment"></textarea>
       </mat-form-field>
     </div>
   </div>
 
-  <button mat-raised-button class="green-btn" (click)="createTask()">
-    <mat-icon>add</mat-icon> Create Task
+  <button (click)="createTask()" class="green-btn" mat-raised-button>
+    <mat-icon>add</mat-icon>
+    Create Task
   </button>
 </div>

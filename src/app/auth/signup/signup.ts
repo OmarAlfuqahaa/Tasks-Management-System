@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService, SignupPayload, SignupResponse } from '../../core/auth.service';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {Router} from '@angular/router';
+import {finalize} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService, SignupPayload, SignupResponse} from '../../core/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +29,8 @@ export class SignupComponent {
   apiError: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
   signupForm = new FormGroup(
     {
@@ -39,13 +40,13 @@ export class SignupComponent {
       confirmPassword: new FormControl('', Validators.required),
       role: new FormControl('', Validators.required)
     },
-    { validators: SignupComponent.passwordsMatchValidator }
+    {validators: SignupComponent.passwordsMatchValidator}
   );
 
   static passwordsMatchValidator(form: AbstractControl) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordsMismatch: true };
+    return password === confirmPassword ? null : {passwordsMismatch: true};
   }
 
   onSubmit() {

@@ -1,18 +1,18 @@
 <div class="edit-user-dialog-container">
   <h2>Edit User</h2>
   <form [formGroup]="editForm">
-    <div class="feedback error" *ngIf="apiError">
+    <div *ngIf="apiError" class="feedback error">
       {{ apiError }}
     </div>
 
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
+      <input formControlName="name" matInput>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email">
+      <input formControlName="email" matInput>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -23,10 +23,10 @@
     </mat-form-field>
 
     <div class="actions">
-      <button mat-raised-button color="primary" (click)="onSave()" [disabled]="loading">
+      <button (click)="onSave()" [disabled]="loading" color="primary" mat-raised-button>
         {{ loading ? 'Saving...' : 'Save' }}
       </button>
-      <button mat-raised-button color="warn" (click)="onCancel()" [disabled]="loading">Cancel</button>
+      <button (click)="onCancel()" [disabled]="loading" color="warn" mat-raised-button>Cancel</button>
     </div>
   </form>
 </div>

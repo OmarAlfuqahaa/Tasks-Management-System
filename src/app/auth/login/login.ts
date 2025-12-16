@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterLink } from '@angular/router';
-import { finalize } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService, LoginPayload, LoginResponse } from '../../core/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {Router, RouterLink} from '@angular/router';
+import {finalize} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService, LoginPayload, LoginResponse} from '../../core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,8 @@ export class Login implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
 
@@ -47,7 +48,7 @@ export class Login implements OnInit {
       this.loginError = null;
       this.loading = true;
 
-      const { email, password } = this.loginForm.value as LoginPayload;
+      const {email, password} = this.loginForm.value as LoginPayload;
 
       const payload: LoginPayload = {
         email: email || '',

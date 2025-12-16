@@ -73,7 +73,7 @@ mat-label {
 
 input {
   color: #1b1b1b !important;
-  border-bottom: 1.5px solid rgba(0,0,0,0.6);
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.6);
 }
 
 input:focus {

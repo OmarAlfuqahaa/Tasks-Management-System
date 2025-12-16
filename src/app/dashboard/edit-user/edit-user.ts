@@ -1,13 +1,13 @@
-import { Component, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { finalize } from 'rxjs';
-import { UsersService, UserDto } from '../../dashboard/users.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, Inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {finalize} from 'rxjs';
+import {UsersService, UserDto} from '../users.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 export interface User {
@@ -36,7 +36,6 @@ export class EditUserDialog {
     @Inject(MAT_DIALOG_DATA) public data: User,
     private usersService: UsersService,
     private snackBar: MatSnackBar
-
   ) {
     this.editForm = new FormGroup({
       name: new FormControl(data.name, [Validators.required, Validators.minLength(2)]),
@@ -63,9 +62,9 @@ export class EditUserDialog {
     this.loading = true;
     this.apiError = null;
 
-    const { name, email, role } = this.editForm.value;
+    const {name, email, role} = this.editForm.value;
 
-    this.usersService.updateUser(this.data.id, { name, email, role }).pipe(
+    this.usersService.updateUser(this.data.id, {name, email, role}).pipe(
       finalize(() => this.loading = false)
     ).subscribe({
       next: (updated: UserDto) => {

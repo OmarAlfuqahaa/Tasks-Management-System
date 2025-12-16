@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { Subscription, finalize } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { TasksService, UpdateTaskPayload, TaskDto } from '../../core/tasks.service';
-import { AuthService, AuthenticatedUser } from '../../core/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {RouterModule, ActivatedRoute, Router} from '@angular/router';
+import {Subscription, finalize} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TasksService, UpdateTaskPayload, TaskDto} from '../../core/tasks.service';
+import {AuthService, AuthenticatedUser} from '../../core/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {UsersService, UserDto} from '../users.service'
 
 
@@ -36,9 +36,9 @@ export class TaskEdit implements OnInit, OnDestroy {
   taskForm!: FormGroup;
   taskId!: number;
   statuses: { value: Status; label: string }[] = [
-    { value: 'todo', label: 'To Do' },
-    { value: 'in-progress', label: 'In Progress' },
-    { value: 'done', label: 'Done' }
+    {value: 'todo', label: 'To Do'},
+    {value: 'in-progress', label: 'In Progress'},
+    {value: 'done', label: 'Done'}
   ];
 
   loading = false;
@@ -61,7 +61,8 @@ export class TaskEdit implements OnInit, OnDestroy {
     private usersService: UsersService,
     private authService: AuthService,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+  }
 
   showSuccess(message: string) {
     this.snackBar.open(message, 'Close', {
@@ -98,7 +99,7 @@ export class TaskEdit implements OnInit, OnDestroy {
       this.currentUser = user;
       this.currentRole = user?.role ?? null;
       if (!this.canEditLoadedTask && this.taskForm) {
-        this.taskForm.disable({ emitEvent: false });
+        this.taskForm.disable({emitEvent: false});
       }
     });
     this.subscriptions.add(authSub);
@@ -127,10 +128,10 @@ export class TaskEdit implements OnInit, OnDestroy {
         });
         this.canEditLoadedTask = this.canEditTask(task);
         if (!this.canEditLoadedTask) {
-          this.taskForm.disable({ emitEvent: false });
+          this.taskForm.disable({emitEvent: false});
           this.apiError = 'You do not have permission to edit this task.';
         } else if (this.taskForm.disabled) {
-          this.taskForm.enable({ emitEvent: false });
+          this.taskForm.enable({emitEvent: false});
         }
       },
       error: (error: HttpErrorResponse) => {
@@ -176,8 +177,6 @@ export class TaskEdit implements OnInit, OnDestroy {
 
     this.subscriptions.add(update$);
   }
-
-
 
 
   canEditTask(task: TaskDto): boolean {

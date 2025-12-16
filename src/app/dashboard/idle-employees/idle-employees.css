@@ -24,7 +24,7 @@ h2 {
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 ::ng-deep th.mat-header-cell {
@@ -91,6 +91,7 @@ button.mat-icon-button {
   text-decoration: underline;
   cursor: pointer;
 }
+
 .task-link:hover {
   color: #0d47a1;
 }

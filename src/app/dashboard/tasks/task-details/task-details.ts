@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {TasksService, UpdateTaskPayload} from '../../../core/tasks.service';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatOptionModule} from '@angular/material/core';
+import {CommonModule} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
@@ -30,13 +30,14 @@ export class TaskDetailsComponent implements OnInit {
   newComment: string = '';
   fileToUpload: File | null = null;
   public statuses = [
-    { value: 'todo', label: 'To Do' },
-    { value: 'in-progress', label: 'In Progress' },
-    { value: 'done', label: 'Done' }
+    {value: 'todo', label: 'To Do'},
+    {value: 'in-progress', label: 'In Progress'},
+    {value: 'done', label: 'Done'}
   ];
 
 
-  constructor(private route: ActivatedRoute, private taskService: TasksService) { }
+  constructor(private route: ActivatedRoute, private taskService: TasksService) {
+  }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
@@ -104,10 +105,6 @@ export class TaskDetailsComponent implements OnInit {
   }
 
 
-
-
-
-
   onFileSelected(event: any) {
     this.fileToUpload = event.target.files[0];
   }
@@ -124,8 +121,6 @@ export class TaskDetailsComponent implements OnInit {
       this.fileToUpload = null;
     });
   }
-
-
 
 
   public getAllowedStatuses(): string[] {

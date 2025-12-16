@@ -1,14 +1,14 @@
 <div class="login-page">
 
-  <img src="assets/images.png" alt="Logo" class="top-left-logo" />
+  <img alt="Logo" class="top-left-logo" src="assets/images.png"/>
 
   <div class="login-container">
     <h2>Login</h2>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email">
+        <input formControlName="email" matInput type="email">
         <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
           Enter a valid email
         </mat-error>
@@ -16,23 +16,22 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password">
+        <input formControlName="password" matInput type="password">
         <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
           Password is required
         </mat-error>
       </mat-form-field>
 
 
-
       <div>
         <a [routerLink]="['/signup']">Don't have an account?</a>
       </div>
 
-      <div class="login-error" *ngIf="loginError">
+      <div *ngIf="loginError" class="login-error">
         {{ loginError }}
       </div>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || loading">
+      <button [disabled]="loginForm.invalid || loading" color="primary" mat-raised-button type="submit">
         {{ loading ? 'Signing in...' : 'Login' }}
       </button>
     </form>

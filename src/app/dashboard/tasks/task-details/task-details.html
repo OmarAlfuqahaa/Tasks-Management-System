@@ -5,28 +5,35 @@
     <h2>{{ task.title }}</h2>
     <div class="task-meta">
       <span *ngIf="task.updatedAt">
-        <mat-icon>event</mat-icon> {{ task.updatedAt | date:'short' }}
+        <mat-icon>event</mat-icon>
+        {{ task.updatedAt | date:'short' }}
       </span>
     </div>
   </div>
 
-  <mat-tab-group mat-stretch-tabs class="task-tabs">
+  <mat-tab-group class="task-tabs" mat-stretch-tabs>
 
     <mat-tab label="Task Details">
       <div class="card">
 
-        <h3><mat-icon>description</mat-icon> Description</h3>
+        <h3>
+          <mat-icon>description</mat-icon>
+          Description
+        </h3>
         <p>{{ task.description }}</p>
 
-        <h3><mat-icon>sync_alt</mat-icon> Change Status</h3>
+        <h3>
+          <mat-icon>sync_alt</mat-icon>
+          Change Status
+        </h3>
 
         <mat-form-field appearance="outline" class="status-field">
           <mat-label>Status</mat-label>
-          <mat-select [(value)]="task.status" (selectionChange)="changeStatus($event.value)">
+          <mat-select (selectionChange)="changeStatus($event.value)" [(value)]="task.status">
             <mat-option
               *ngFor="let s of statuses"
-              [value]="s.value"
-              [disabled]="!getAllowedStatuses().includes(s.value)">
+              [disabled]="!getAllowedStatuses().includes(s.value)"
+              [value]="s.value">
               {{ s.label }}
             </mat-option>
           </mat-select>
@@ -38,26 +45,30 @@
     <mat-tab label="Attachments">
       <div class="card">
 
-        <h3><mat-icon>attach_file</mat-icon> Attachments</h3>
+        <h3>
+          <mat-icon>attach_file</mat-icon>
+          Attachments
+        </h3>
 
         <div class="upload-row">
-          <input type="file" #fileInput (change)="onFileSelected($event)" />
-          <button class="action-btn" (click)="uploadFile(fileInput)">
-            <mat-icon>cloud_upload</mat-icon> Upload
+          <input #fileInput (change)="onFileSelected($event)" type="file"/>
+          <button (click)="uploadFile(fileInput)" class="action-btn">
+            <mat-icon>cloud_upload</mat-icon>
+            Upload
           </button>
         </div>
 
         <hr>
 
         <div *ngIf="task.attachments?.length > 0; else noFiles">
-          <div class="file-row" *ngFor="let file of task.attachments">
+          <div *ngFor="let file of task.attachments" class="file-row">
             <mat-icon>insert_drive_file</mat-icon>
 
             <a [href]="'http://localhost:5258' + file.url" target="_blank">
               {{ file.name }}
             </a>
 
-            <button class="delete-btn" (click)="deleteAttachment(file.id)">
+            <button (click)="deleteAttachment(file.id)" class="delete-btn">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -74,7 +85,10 @@
     <mat-tab label="Comments">
       <div class="card comments-card">
 
-        <h3><mat-icon>chat</mat-icon> Comments</h3>
+        <h3>
+          <mat-icon>chat</mat-icon>
+          Comments
+        </h3>
 
         <div *ngFor="let comment of task.comments" class="comment-box">
           <div class="comment-header">
@@ -85,9 +99,10 @@
         </div>
 
         <div class="add-comment-box">
-          <input [(ngModel)]="newComment" placeholder="Write a comment..." />
-          <button class="action-btn" (click)="addComment()">
-            <mat-icon>send</mat-icon> Send
+          <input [(ngModel)]="newComment" placeholder="Write a comment..."/>
+          <button (click)="addComment()" class="action-btn">
+            <mat-icon>send</mat-icon>
+            Send
           </button>
         </div>
 

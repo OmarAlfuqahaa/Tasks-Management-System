@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { API_BASE_URL } from './api.config';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {API_BASE_URL} from './api.config';
 
 // Payload for login API
 export interface LoginPayload {
@@ -51,7 +51,8 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<AuthenticatedUser | null>(this.loadStoredUser());
   readonly currentUser$ = this.currentUserSubject.asObservable(); // Observable for components
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   // Call login API
   login(payload: LoginPayload): Observable<LoginResponse> {
@@ -78,16 +79,6 @@ export class AuthService {
       localStorage.removeItem(this.USER_STORAGE_KEY);
     }
     this.currentUserSubject.next(user); // Update BehaviorSubject
-  }
-
-  // Get current user value
-  getCurrentUser(): AuthenticatedUser | null {
-    return this.currentUserSubject.value;
-  }
-
-  // Get current user's role
-  getCurrentRole(): AuthenticatedUser['role'] | null {
-    return this.currentUserSubject.value?.role ?? null;
   }
 
   // Load stored user from localStorage

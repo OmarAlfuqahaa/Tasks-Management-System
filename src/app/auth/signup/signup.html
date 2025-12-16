@@ -1,14 +1,14 @@
 <div class="signup-page">
-  <img src="assets/images.png" alt="Logo" class="top-left-logo" />
+  <img alt="Logo" class="top-left-logo" src="assets/images.png"/>
 
   <div class="signup-container">
     <h2>Create account</h2>
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Name</mat-label>
-        <input matInput type="text" formControlName="name">
+        <input formControlName="name" matInput type="text">
         <mat-error *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
           Name is required (min 3 characters)
         </mat-error>
@@ -16,7 +16,7 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email">
+        <input formControlName="email" matInput type="email">
         <mat-error *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
           Enter a valid email
         </mat-error>
@@ -24,7 +24,7 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password">
+        <input formControlName="password" matInput type="password">
         <mat-error *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
           Password is required (min 6 characters)
         </mat-error>
@@ -32,7 +32,7 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Confirm Password</mat-label>
-        <input matInput type="password" formControlName="confirmPassword">
+        <input formControlName="confirmPassword" matInput type="password">
         <mat-error *ngIf="signupForm.hasError('passwordsMismatch') && signupForm.get('confirmPassword')?.touched">
           Passwords do not match
         </mat-error>
@@ -49,10 +49,10 @@
         </mat-error>
       </mat-form-field>
 
-      <div class="signup-error" *ngIf="apiError">{{ apiError }}</div>
-      <div class="signup-success" *ngIf="successMessage">{{ successMessage }}</div>
+      <div *ngIf="apiError" class="signup-error">{{ apiError }}</div>
+      <div *ngIf="successMessage" class="signup-success">{{ successMessage }}</div>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid || loading">
+      <button [disabled]="signupForm.invalid || loading" color="primary" mat-raised-button type="submit">
         {{ loading ? 'Signing up...' : 'Sign Up' }}
       </button>
 

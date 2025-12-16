@@ -2,7 +2,7 @@
   padding: 24px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
 }
 
@@ -50,10 +50,17 @@
   text-align: center;
 }
 
-.status-badge.todo { background-color: #f39c12; }
-.status-badge.in-progress { background-color: #3498db; }
-.status-badge.done { background-color: #2ecc71; }
+.status-badge.todo {
+  background-color: #f39c12;
+}
 
+.status-badge.in-progress {
+  background-color: #3498db;
+}
+
+.status-badge.done {
+  background-color: #2ecc71;
+}
 
 
 .add-task-btn-wrapper {

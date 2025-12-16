@@ -1,37 +1,35 @@
-<div class="tasks-container" >
+<div class="tasks-container">
   <h2>Tasks</h2>
 
-  <div class="tasks-feedback error" *ngIf="error">
+  <div *ngIf="error" class="tasks-feedback error">
     {{ error }}
   </div>
-  <div class="tasks-feedback info" *ngIf="loading">
+  <div *ngIf="loading" class="tasks-feedback info">
     Loading tasks...
   </div>
 
 
   <div class="filters">
     <ng-select
+      (change)="loadTasks()"
+      [(ngModel)]="selectedStatus"
       [items]="statuses"
       bindLabel="label"
       bindValue="value"
-      [(ngModel)]="selectedStatus"
-      (change)="loadTasks()"
       placeholder="Filter by status">
     </ng-select>
 
 
-
-
     <ng-select
-      *ngIf="canUseAssigneeFilter()"
-      [items]="assignees"
-      [(ngModel)]="selectedAssignees"
-      [multiple]="true"
       (change)="loadTasks()"
-      placeholder="Filter by assignee"
-      [searchable]="true"
+      *ngIf="canUseAssigneeFilter()"
+      [(ngModel)]="selectedAssignees"
       [clearable]="true"
-      class="custom-ng-select">
+      [items]="assignees"
+      [multiple]="true"
+      [searchable]="true"
+      class="custom-ng-select"
+      placeholder="Filter by assignee">
     </ng-select>
 
 
@@ -56,37 +54,39 @@
         <td>{{ task.id }}</td>
         <td>{{ task.title }}</td>
         <td>{{ task.assignedTo }}</td>
-        <td><span class="status-badge" [ngClass]="task.status">{{ task.status }}</span></td>
+        <td><span [ngClass]="task.status" class="status-badge">{{ task.status }}</span></td>
         <td>{{ task.createdAt | date:'short' }}</td>
         <td *ngIf="canSeeAnyTaskActions()">
           <div style="display: flex; gap: 8px; flex-direction: row; align-items: flex-start;">
-            <button mat-icon-button color="primary" (click)="goToEdit(task.id)" *ngIf="!isEmployee() && canEditTask(task)">
+            <button (click)="goToEdit(task.id)" *ngIf="!isEmployee() && canEditTask(task)" color="primary"
+                    mat-icon-button>
               <mat-icon>edit</mat-icon>
             </button>
 
 
             <mat-select
+              (selectionChange)="updateTaskStatus(task)"
               *ngIf="isEmployee() && canEditTask(task) && isTaskOwner(task)"
               [(ngModel)]="task.status"
-              (selectionChange)="updateTaskStatus(task)"
               class="status-select"
               style="color: #006400; font-size: 16px; border-radius: 4px; padding: 1px 1px; min-height: 28px;">
               <mat-option *ngFor="let s of statuses"
-                          [value]="s.value"
-                          [disabled]="!getAllowedStatuses(task).includes(s.value)">
+                          [disabled]="!getAllowedStatuses(task).includes(s.value)"
+                          [value]="s.value">
 
                 {{ s.label }}
               </mat-option>
             </mat-select>
 
-            <button mat-icon-button color="warn" (click)="deleteTask(task)" [disabled]="deletingTaskId === task.id" *ngIf="canDeleteTask(task)">
+            <button (click)="deleteTask(task)" *ngIf="canDeleteTask(task)" [disabled]="deletingTaskId === task.id" color="warn"
+                    mat-icon-button>
               <mat-icon>delete</mat-icon>
             </button>
           </div>
         </td>
 
         <td>
-          <button mat-icon-button color="primary" (click)="openTask(task.id)" matTooltip="View Task">
+          <button (click)="openTask(task.id)" color="primary" mat-icon-button matTooltip="View Task">
             <mat-icon>visibility</mat-icon>
           </button>
 
@@ -102,11 +102,12 @@
 
   </div>
 
-  <div class="pagination-container" style="display: flex; align-items: center; justify-content: space-between; margin-top: 50px;">
+  <div class="pagination-container"
+       style="display: flex; align-items: center; justify-content: space-between; margin-top: 50px;">
     <!-- Items per page selector -->
     <mat-form-field appearance="outline" style="width: 100px;">
       <mat-label>Items per page</mat-label>
-      <mat-select [(ngModel)]="itemsPerPage" (selectionChange)="loadTasks()">
+      <mat-select (selectionChange)="loadTasks()" [(ngModel)]="itemsPerPage">
         <mat-option [value]="5">5</mat-option>
         <mat-option [value]="10">10</mat-option>
         <mat-option [value]="20">20</mat-option>
@@ -117,24 +118,24 @@
     <div class="pagination-wrapper">
       <div class="pagination-wrapper" style="display: flex; gap: 8px; margin-top: 16px;">
         <button
-          mat-button
+          (click)="changePage(page - 1)"
           [disabled]="page === 1"
-          (click)="changePage(page - 1)">
+          mat-button>
           ❮❮
         </button>
 
         <button
-          mat-button
+          (click)="changePage(p)"
           *ngFor="let p of pages"
           [color]="p === page ? 'primary' : ''"
-          (click)="changePage(p)">
+          mat-button>
           {{ p }}
         </button>
 
         <button
-          mat-button
+          (click)="changePage(page + 1)"
           [disabled]="page === totalPages"
-          (click)="changePage(page + 1)">
+          mat-button>
           ❯❯
         </button>
       </div>
@@ -148,13 +149,12 @@
 
   <!-- Add Task Button -->
 
-  <div class="add-task-btn-wrapper" *ngIf="canCreateTask()">
-    <button mat-raised-button color="primary" (click)="openAddTaskDialog()">
+  <div *ngIf="canCreateTask()" class="add-task-btn-wrapper">
+    <button (click)="openAddTaskDialog()" color="primary" mat-raised-button>
       Add New Task
     </button>
   </div>
 </div>
-
 
 
 <ng-template #noTaskAccess>

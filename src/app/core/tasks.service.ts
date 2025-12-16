@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { API_BASE_URL } from './api.config';
-import { PagedResult } from './models/paged-result';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {API_BASE_URL} from './api.config';
+import {PagedResult} from './models/paged-result';
 
 // Task data transfer object
 export interface Comment {
@@ -63,9 +63,6 @@ export interface CommentDto {
 }
 
 
-
-
-
 @Injectable({
   providedIn: 'root' // Service available app-wide
 })
@@ -73,7 +70,8 @@ export class TasksService {
 
   private readonly baseUrl = `${API_BASE_URL}/tasks`; // Base API endpoint
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   // Create a new task
   createTask(payload: CreateTaskPayload): Observable<TaskDto> {
@@ -100,9 +98,8 @@ export class TasksService {
       });
     }
 
-    return this.http.get<PagedResult<TaskDto>>(this.baseUrl, { params });
+    return this.http.get<PagedResult<TaskDto>>(this.baseUrl, {params});
   }
-
 
 
   // Get task by ID
@@ -125,11 +122,8 @@ export class TasksService {
   }
 
   addComment(taskId: number, text: string): Observable<CommentDto> {
-    return this.http.post<CommentDto>(`${this.baseUrl}/${taskId}/comments`, { text });
+    return this.http.post<CommentDto>(`${this.baseUrl}/${taskId}/comments`, {text});
   }
-
-
-
 
 
   // TasksService

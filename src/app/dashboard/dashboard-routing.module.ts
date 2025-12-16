@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DashboardLayout } from './dashboard-layout/dashboard-layout';
-import { TaskDetailsComponent } from './tasks/task-details/task-details';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {DashboardLayout} from './dashboard-layout/dashboard-layout';
+import {TaskDetailsComponent} from './tasks/task-details/task-details';
 
 
 const routes: Routes = [
@@ -47,4 +47,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {
+}

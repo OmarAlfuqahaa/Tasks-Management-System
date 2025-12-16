@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { IdleEmployee } from './idle-employees/idle-employees';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {IdleEmployee} from './idle-employees/idle-employees';
 
 
 export interface DashboardStats {
@@ -24,7 +24,7 @@ export interface TaskCount {
   totalTasks: number;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class DashboardService {
   private baseUrl = 'http://localhost:5258/api/dashboard';
   private statsSubject = new BehaviorSubject<DashboardStats>({
@@ -40,15 +40,14 @@ export class DashboardService {
 
   dashboardStats$ = this.statsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   loadStats() {
     this.http
       .get<DashboardStats>(`${this.baseUrl}/welcome`)
       .subscribe(stats => this.statsSubject.next(stats));
   }
-
-
 
 
   getIdleEmployees() {

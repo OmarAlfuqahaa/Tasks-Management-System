@@ -1,26 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterModule} from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { finalize, Subscription, firstValueFrom } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { TasksService, TaskDto, UpdateTaskPayload } from '../../core/tasks.service';
-import { AuthService, AuthenticatedUser } from '../../core/auth.service';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {finalize, Subscription, firstValueFrom} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TasksService, TaskDto, UpdateTaskPayload} from '../../core/tasks.service';
+import {AuthService, AuthenticatedUser} from '../../core/auth.service';
 import Swal from 'sweetalert2';
-import { UsersService } from '../users.service';
-import { ChangeDetectorRef } from '@angular/core';
-import { NgSelectModule } from '@ng-select/ng-select';
+import {UsersService} from '../users.service';
+import {ChangeDetectorRef} from '@angular/core';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
-
-type Status = 'todo' | 'in-progress' | 'done' ;
+type Status = 'todo' | 'in-progress' | 'done';
 type Role = AuthenticatedUser['role'] | null;
 
 @Component({
@@ -43,7 +42,7 @@ type Role = AuthenticatedUser['role'] | null;
   styleUrls: ['./tasks.css'],
 })
 export class Tasks implements OnInit, OnDestroy {
-  private totalItems= 0;
+  private totalItems = 0;
 
   constructor(
     private router: Router,
@@ -52,8 +51,8 @@ export class Tasks implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private usersService: UsersService,
     private cdr: ChangeDetectorRef
-
-  ) {}
+  ) {
+  }
 
   tasks: TaskDto[] = [];
   showAllTasks: boolean = false;
@@ -61,11 +60,11 @@ export class Tasks implements OnInit, OnDestroy {
   selectedOtherAssignees: string[] = [];
   otherAssignees: string[] = [];
 
-  statuses: { value: Status | any ; label: string }[] = [
-    { value: 'All', label: 'All' },
-    { value: 'todo', label: 'To Do' },
-    { value: 'in-progress', label: 'In Progress' },
-    { value: 'done', label: 'Done' }
+  statuses: { value: Status | any; label: string }[] = [
+    {value: 'All', label: 'All'},
+    {value: 'todo', label: 'To Do'},
+    {value: 'in-progress', label: 'In Progress'},
+    {value: 'done', label: 'Done'}
   ];
 
   assignees: string[] = ['All'];
@@ -118,21 +117,6 @@ export class Tasks implements OnInit, OnDestroy {
   }
 
 
-  private async refreshUsersMap(): Promise<void> {
-    const users = await firstValueFrom(this.usersService.getEmployees());
-    if (!users) return;
-
-    this.usersMap.clear();
-    users.forEach(u => this.usersMap.set(u.name.toLowerCase(), u.id));
-
-    const currentName = this.currentUser?.name ?? '';
-    this.otherAssignees = users
-      .map(u => u.name)
-      .filter(name => name.toLowerCase() !== currentName.toLowerCase());
-
-    this.assignees = ['All', ...this.otherAssignees];
-  }
-
   private applyQueryParams() {
     const params = this.route.snapshot.queryParams;
     if (!params['assignedUserIds']) return;
@@ -145,9 +129,6 @@ export class Tasks implements OnInit, OnDestroy {
       .map(id => this.getAssigneeNameById(id))
       .filter((name): name is string => !!name);
   }
-
-
-
 
 
   ngOnDestroy(): void {
@@ -206,7 +187,6 @@ export class Tasks implements OnInit, OnDestroy {
 
     this.subscriptions.add(load$);
   }
-
 
 
   private getUserIdByName(name: string): number | undefined {
@@ -276,17 +256,17 @@ export class Tasks implements OnInit, OnDestroy {
     }
 
 
-  const payload: UpdateTaskPayload = {
-    title: task.title,
-    description: task.description ?? '',
-    assignedUserId: Number(task.assignedUserId),
-    status: task.status
-  };
+    const payload: UpdateTaskPayload = {
+      title: task.title,
+      description: task.description ?? '',
+      assignedUserId: Number(task.assignedUserId),
+      status: task.status
+    };
 
-  this.tasksService.updateTask(task.id, payload).subscribe({
-    next: () => console.log('Status updated to', task.status),
-    error: err => this.error = err?.error?.message || 'Unable to update status.'
-  });
+    this.tasksService.updateTask(task.id, payload).subscribe({
+      next: () => console.log('Status updated to', task.status),
+      error: err => this.error = err?.error?.message || 'Unable to update status.'
+    });
 
 
   }
@@ -350,7 +330,6 @@ export class Tasks implements OnInit, OnDestroy {
   }
 
 
-
   private refreshOtherAssigneeList() {
     this.usersService.getEmployees().subscribe(users => {
       const userNames = users.map(u => u.name);
@@ -362,7 +341,7 @@ export class Tasks implements OnInit, OnDestroy {
   }
 
   get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    return Array.from({length: this.totalPages}, (_, i) => i + 1);
   }
 
   get totalPages(): number {
@@ -379,8 +358,6 @@ export class Tasks implements OnInit, OnDestroy {
   openTask(taskId: number) {
     this.router.navigate(['/dashboard/tasks', taskId]);
   }
-
-
 
 
   private getAssigneeNameById(id: number): string | undefined {

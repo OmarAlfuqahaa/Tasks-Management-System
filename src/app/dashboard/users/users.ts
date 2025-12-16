@@ -1,18 +1,17 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { UsersService, UserDto } from '../users.service';
-import { finalize } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService, AuthenticatedUser } from '../../core/auth.service';
+import {Component, DestroyRef, OnInit, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {UsersService, UserDto} from '../users.service';
+import {finalize} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService, AuthenticatedUser} from '../../core/auth.service';
 import Swal from 'sweetalert2';
-
 
 
 type Role = AuthenticatedUser['role'] | null;
@@ -54,7 +53,8 @@ export class Users implements OnInit {
     private dialog: MatDialog,
     private usersService: UsersService,
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.authService.currentUser$
@@ -120,11 +120,11 @@ export class Users implements OnInit {
       return;
     }
 
-    const { EditUserDialog } = await import('../edit-user/edit-user');
+    const {EditUserDialog} = await import('../edit-user/edit-user');
 
     const dialogRef = this.dialog.open(EditUserDialog, {
       width: '400px',
-      data: { ...user }
+      data: {...user}
     });
 
     dialogRef.afterClosed().subscribe((result: UserDto | undefined) => {
@@ -139,7 +139,6 @@ export class Users implements OnInit {
 
     });
   }
-
 
 
   deleteUser(user: UserDto) {
@@ -199,7 +198,7 @@ export class Users implements OnInit {
   }
 
   get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    return Array.from({length: this.totalPages}, (_, i) => i + 1);
   }
 
   get totalPages(): number {

@@ -1,20 +1,20 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import { Router, RouterModule } from '@angular/router';
-import { finalize, forkJoin } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TasksService, CreateTaskPayload } from '../../core/tasks.service';
-import { AuthService, AuthenticatedUser } from '../../core/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
-import { UserDto, UsersService } from '../users.service';
+import {Component, DestroyRef, OnInit, inject} from '@angular/core';
+import {CommonModule, NgIf, NgFor} from '@angular/common';
+import {ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTabsModule} from '@angular/material/tabs';
+import {Router, RouterModule} from '@angular/router';
+import {finalize, forkJoin} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {TasksService, CreateTaskPayload} from '../../core/tasks.service';
+import {AuthService, AuthenticatedUser} from '../../core/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute} from '@angular/router';
+import {UserDto, UsersService} from '../users.service';
 
 type Role = AuthenticatedUser['role'] | null;
 
@@ -81,8 +81,8 @@ export class TaskCreate implements OnInit {
         this.currentUser = user;
         this.currentRole = user?.role ?? null;
 
-        if (!this.canCreateTask()) this.taskForm.disable({ emitEvent: false });
-        else if (this.taskForm.disabled) this.taskForm.enable({ emitEvent: false });
+        if (!this.canCreateTask()) this.taskForm.disable({emitEvent: false});
+        else if (this.taskForm.disabled) this.taskForm.enable({emitEvent: false});
       });
 
     this.route.queryParams
@@ -90,14 +90,13 @@ export class TaskCreate implements OnInit {
       .subscribe(params => {
         const employeeId = params['employeeId'];
         if (employeeId) {
-          this.taskForm.patchValue({ assignedUserId: Number(employeeId) });
+          this.taskForm.patchValue({assignedUserId: Number(employeeId)});
           this.taskForm.get('assignedUserId')?.disable();
         }
       });
 
     this.loadAssignees();
   }
-
 
 
   private loadAssignees() {
@@ -116,16 +115,24 @@ export class TaskCreate implements OnInit {
     });
   }
 
-  canCreateTask(): boolean { return this.isAdmin() || this.isProjectManager(); }
-  private isAdmin(): boolean { return this.currentRole === 'admin'; }
-  private isProjectManager(): boolean { return this.currentRole === 'project-manager'; }
+  canCreateTask(): boolean {
+    return this.isAdmin() || this.isProjectManager();
+  }
+
+  private isAdmin(): boolean {
+    return this.currentRole === 'admin';
+  }
+
+  private isProjectManager(): boolean {
+    return this.currentRole === 'project-manager';
+  }
 
   showSuccess(message: string) {
-    this.snackBar.open(message, 'Close', { duration: 3000, panelClass: ['snackbar-success'] });
+    this.snackBar.open(message, 'Close', {duration: 3000, panelClass: ['snackbar-success']});
   }
 
   showError(message: string) {
-    this.snackBar.open(message, 'Close', { duration: 3000, panelClass: ['snackbar-error'] });
+    this.snackBar.open(message, 'Close', {duration: 3000, panelClass: ['snackbar-error']});
   }
 
   onFilesSelected(event: any) {

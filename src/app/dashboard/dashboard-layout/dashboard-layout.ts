@@ -1,16 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { AuthService, AuthenticatedUser } from '../../core/auth.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {CommonModule} from '@angular/common';
+import {Subscription} from 'rxjs';
+import {AuthService, AuthenticatedUser} from '../../core/auth.service';
 import {DashboardService} from '../dashboard.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import * as signalR from '@microsoft/signalr';
-
 
 
 // Interface for sidebar menu items
@@ -41,7 +40,6 @@ interface DashboardStats {
   done: number;
   taskCounts: TaskCount[];
 }
-
 
 
 // Type for user roles
@@ -84,16 +82,14 @@ export class DashboardLayout implements OnInit, OnDestroy {
   private signalRStarted = false;
 
 
-
-
-
   private subscriptions = new Subscription();
 
   constructor(
     private authService: AuthService,
     private dashboardService: DashboardService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -122,7 +118,7 @@ export class DashboardLayout implements OnInit, OnDestroy {
 
   private startSignalRConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5258/dashboardHub', { withCredentials: true })
+      .withUrl('http://localhost:5258/dashboardHub', {withCredentials: true})
       .withAutomaticReconnect([0, 2000, 10000, 30000]) // retry بعد 0ms, 2s, 10s, 30s
       .build();
 
@@ -154,10 +150,6 @@ export class DashboardLayout implements OnInit, OnDestroy {
   }
 
 
-
-
-
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe(); // Cleanup subscriptions
   }
@@ -170,18 +162,6 @@ export class DashboardLayout implements OnInit, OnDestroy {
     }
   }
 
-  // Permission checks
-  canViewUsers(): boolean {
-    return this.currentRole === 'admin';
-  }
-
-  canViewProjects(): boolean {
-    return this.currentRole === 'admin' || this.currentRole === 'project-manager';
-  }
-
-  canViewTasks(): boolean {
-    return !!this.currentRole;
-  }
 
   // Build menu based on role
   private buildMenu(role: Role): MenuItem[] {
@@ -192,9 +172,14 @@ export class DashboardLayout implements OnInit, OnDestroy {
     const logoutAction = () => this.logout(); // Logout function
 
     const definitions: MenuItem[] = [
-      { label: 'Users', icon: 'people', route: '/dashboard/users', roles: ['admin'] },
-      { label: role === 'employee' ? 'My Tasks' : 'Tasks', icon: 'assignment', route: '/dashboard/tasks', roles: ['admin', 'project-manager', 'employee'] },
-      { label: 'Logout', icon: 'logout', action: logoutAction, roles: ['admin', 'project-manager', 'employee'] }
+      {label: 'Users', icon: 'people', route: '/dashboard/users', roles: ['admin']},
+      {
+        label: role === 'employee' ? 'My Tasks' : 'Tasks',
+        icon: 'assignment',
+        route: '/dashboard/tasks',
+        roles: ['admin', 'project-manager', 'employee']
+      },
+      {label: 'Logout', icon: 'logout', action: logoutAction, roles: ['admin', 'project-manager', 'employee']}
     ];
 
     return definitions.filter(item => item.roles.includes(role)); // Return items allowed for role
@@ -234,11 +219,9 @@ export class DashboardLayout implements OnInit, OnDestroy {
     }
   }
 
-  // dashboard-layout.ts
   openIdleEmployees() {
     this.router.navigate(['/dashboard/idle-employees']);
   }
-
 
 
 }

@@ -4,7 +4,7 @@
   padding: 30px;
   max-width: 800px;
   margin: 30px auto;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   font-family: 'Roboto', sans-serif;
 }
 
@@ -34,7 +34,7 @@
   padding: 20px;
   border-radius: 14px;
   margin-top: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .card h3 {
@@ -98,7 +98,7 @@
   padding: 12px 15px;
   border-radius: 10px;
   margin-bottom: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .comment-header {
@@ -143,7 +143,7 @@
   margin-bottom: 6px;
   border-radius: 6px;
   background-color: #f9f9f9;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: background 0.2s;
 }
 
@@ -226,7 +226,7 @@
 
 .status-field ::ng-deep .ng-select-dropdown {
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   background-color: #f8fdf8;
 }
 
