@@ -10,6 +10,7 @@ This project is a **Task Management System** designed to help organizations mana
 - filter tasks.
 - Track task status (Todo, In Progress, Done).
 - Dashboard to view task statistics and idle employees.
+- Features for Admin (maneging users)
 
 ### User registration and authentication.
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/6e2841f7-c5f4-433e-9d5d-5295e7437ad7" />
@@ -39,6 +40,12 @@ This project is a **Task Management System** designed to help organizations mana
 <img width="1709" height="258" alt="image" src="https://github.com/user-attachments/assets/2b007708-f4c1-4a96-a96b-c509d22c578b" />
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/e8dfddbc-17f9-49db-a6f8-bccd91f7bf2f" />
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/772ec92a-3afd-4944-a477-2852dcfb7e99" />
+
+### Features for Admin (maneging users)
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/c74f31ea-0397-4fa8-abf3-2fd42856e023" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/9066d5ef-3cc8-4c06-8921-fb276c3915e0" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/9dbba4b1-bec3-42e4-89d7-9b6124976687" />
+<img width="698" height="552" alt="image" src="https://github.com/user-attachments/assets/51c8a854-ffd4-4d44-9685-42ca990a5090" />
 
 
 
